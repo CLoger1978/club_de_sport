@@ -455,6 +455,14 @@
         <argument type="service" id=".service_locator.TJNRSaV.App\Controller\ObjectifController"/>
       </call>
     </service>
+    <service id="App\Controller\PerformanceController" class="App\Controller\PerformanceController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="routing.controller"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.TJNRSaV.App\Controller\PerformanceController"/>
+      </call>
+    </service>
     <service id="App\Controller\SecurityController" class="App\Controller\SecurityController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="routing.controller"/>
@@ -471,6 +479,10 @@
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
     </service>
+    <service id="App\Entity\CompetitionParticipation" class="App\Entity\CompetitionParticipation" autowire="true" autoconfigure="true">
+      <tag name="container.excluded" source="because it's a Doctrine entity"/>
+      <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
+    </service>
     <service id="App\Entity\Objectif" class="App\Entity\Objectif" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
@@ -478,6 +490,9 @@
     <service id="App\Entity\User" class="App\Entity\User" autowire="true" autoconfigure="true">
       <tag name="container.excluded" source="because it's a Doctrine entity"/>
       <tag name="container.excluded" source="with #[Doctrine\ORM\Mapping\Entity] attribute"/>
+    </service>
+    <service id="App\Form\CompetitionParticipationType" class="App\Form\CompetitionParticipationType" autowire="true" autoconfigure="true">
+      <tag name="form.type" csrf_token_id="%.form.type_extension.csrf.token_id%"/>
     </service>
     <service id="App\Form\CompetitionType" class="App\Form\CompetitionType" autowire="true" autoconfigure="true">
       <tag name="form.type" csrf_token_id="%.form.type_extension.csrf.token_id%"/>
@@ -487,6 +502,10 @@
     </service>
     <service id="App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true">
       <tag name="form.type" csrf_token_id="%.form.type_extension.csrf.token_id%"/>
+    </service>
+    <service id="App\Repository\CompetitionParticipationRepository" class="App\Repository\CompetitionParticipationRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\CompetitionRepository" class="App\Repository\CompetitionRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
@@ -502,6 +521,9 @@
     </service>
     <service id="App\Security\AppCustomAuthenticator" class="App\Security\AppCustomAuthenticator" autowire="true" autoconfigure="true">
       <argument type="service" id="router.default"/>
+    </service>
+    <service id="App\Service\PerformanceService" class="App\Service\PerformanceService" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Repository\CompetitionParticipationRepository"/>
     </service>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="argument_resolver.backed_enum_resolver" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver">
@@ -531,7 +553,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.ibfZZhe"/>
+      <argument type="service" id=".service_locator.hEKaufi"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -1547,6 +1569,7 @@
         <argument>Symfony\Bridge\Doctrine\Form\Type</argument>
       </argument>
       <argument type="collection">
+        <argument>App\Form\CompetitionParticipationType</argument>
         <argument>App\Form\CompetitionType</argument>
         <argument>App\Form\ObjectifType</argument>
         <argument>App\Form\UserType</argument>
@@ -3701,7 +3724,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.ibfZZhe"/>
+      <argument type="service" id=".service_locator.hEKaufi"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -3787,6 +3810,7 @@
         <argument>App\Controller\M2LController</argument>
         <argument>App\Controller\MainController</argument>
         <argument>App\Controller\ObjectifController</argument>
+        <argument>App\Controller\PerformanceController</argument>
         <argument>App\Controller\SecurityController</argument>
       </argument>
     </service>
@@ -4325,7 +4349,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.8YjSSoD"/>
+      <argument type="service" id=".service_locator.yyYoFu0"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -4434,6 +4458,7 @@
       <argument type="service" id="form.server_params"/>
       <argument>%form.type_extension.csrf.field_attr%</argument>
       <argument type="collection">
+        <argument key="App\Form\CompetitionParticipationType">submit</argument>
         <argument key="App\Form\CompetitionType">submit</argument>
         <argument key="App\Form\ObjectifType">submit</argument>
         <argument key="App\Form\UserType">submit</argument>
@@ -5701,7 +5726,7 @@
     <service id="doctrine.orm.configuration" class="Doctrine\ORM\Configuration" abstract="true"/>
     <service id="doctrine.orm.entity_manager.abstract" class="Doctrine\ORM\EntityManager" lazy="true" abstract="true"/>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.kxZ91SO"/>
+      <argument type="service" id=".service_locator.BHPr36e"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -5935,6 +5960,9 @@
         <argument type="collection">
           <argument key="Doctrine\DBAL\Platforms\PostgreSQLPlatform">4</argument>
         </argument>
+      </call>
+      <call method="enableNativeLazyObjects">
+        <argument>false</argument>
       </call>
       <call method="setRepositoryFactory">
         <argument type="service" id="doctrine.orm.container_repository_factory"/>
@@ -7852,18 +7880,23 @@
         <argument>App\Controller\M2LController</argument>
         <argument>App\Controller\MainController</argument>
         <argument>App\Controller\ObjectifController</argument>
+        <argument>App\Controller\PerformanceController</argument>
         <argument>App\Controller\SecurityController</argument>
         <argument>App\DataFixtures\AppFixtures</argument>
         <argument>App\Entity\Competition</argument>
+        <argument>App\Entity\CompetitionParticipation</argument>
         <argument>App\Entity\Objectif</argument>
         <argument>App\Entity\User</argument>
+        <argument>App\Form\CompetitionParticipationType</argument>
         <argument>App\Form\CompetitionType</argument>
         <argument>App\Form\ObjectifType</argument>
         <argument>App\Form\UserType</argument>
+        <argument>App\Repository\CompetitionParticipationRepository</argument>
         <argument>App\Repository\CompetitionRepository</argument>
         <argument>App\Repository\ObjectifRepository</argument>
         <argument>App\Repository\UserRepository</argument>
         <argument>App\Security\AppCustomAuthenticator</argument>
+        <argument>App\Service\PerformanceService</argument>
         <argument>controller_resolver</argument>
         <argument>argument_metadata_factory</argument>
         <argument>argument_resolver</argument>
@@ -8841,6 +8874,10 @@
         <argument>.instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ObjectifController</argument>
         <argument>.instanceof.App\Controller\ObjectifController.0.App\Controller\ObjectifController</argument>
         <argument>.abstract.instanceof.App\Controller\ObjectifController</argument>
+        <argument>.instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PerformanceController</argument>
+        <argument>.instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PerformanceController</argument>
+        <argument>.instanceof.App\Controller\PerformanceController.0.App\Controller\PerformanceController</argument>
+        <argument>.abstract.instanceof.App\Controller\PerformanceController</argument>
         <argument>.instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SecurityController</argument>
         <argument>.instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SecurityController</argument>
         <argument>.instanceof.App\Controller\SecurityController.0.App\Controller\SecurityController</argument>
@@ -8849,16 +8886,22 @@
         <argument>.abstract.instanceof.App\DataFixtures\AppFixtures</argument>
         <argument>.instanceof.App\Entity\Competition.0.App\Entity\Competition</argument>
         <argument>.abstract.instanceof.App\Entity\Competition</argument>
+        <argument>.instanceof.App\Entity\CompetitionParticipation.0.App\Entity\CompetitionParticipation</argument>
+        <argument>.abstract.instanceof.App\Entity\CompetitionParticipation</argument>
         <argument>.instanceof.App\Entity\Objectif.0.App\Entity\Objectif</argument>
         <argument>.abstract.instanceof.App\Entity\Objectif</argument>
         <argument>.instanceof.App\Entity\User.0.App\Entity\User</argument>
         <argument>.abstract.instanceof.App\Entity\User</argument>
+        <argument>.instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\CompetitionParticipationType</argument>
+        <argument>.abstract.instanceof.App\Form\CompetitionParticipationType</argument>
         <argument>.instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\CompetitionType</argument>
         <argument>.abstract.instanceof.App\Form\CompetitionType</argument>
         <argument>.instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ObjectifType</argument>
         <argument>.abstract.instanceof.App\Form\ObjectifType</argument>
         <argument>.instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType</argument>
         <argument>.abstract.instanceof.App\Form\UserType</argument>
+        <argument>.instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompetitionParticipationRepository</argument>
+        <argument>.abstract.instanceof.App\Repository\CompetitionParticipationRepository</argument>
         <argument>.instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompetitionRepository</argument>
         <argument>.abstract.instanceof.App\Repository\CompetitionRepository</argument>
         <argument>.instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ObjectifRepository</argument>
@@ -8923,9 +8966,16 @@
         <argument>.service_locator.ZRE8j43</argument>
         <argument>.service_locator.ZRE8j43.App\Controller\ObjectifController::edit()</argument>
         <argument>.service_locator.ZRE8j43.App\Controller\ObjectifController::delete()</argument>
+        <argument>.service_locator.X2xQmC2</argument>
+        <argument>.service_locator.X2xQmC2.App\Controller\PerformanceController::index()</argument>
+        <argument>.service_locator.xHUPSV8</argument>
+        <argument>.service_locator.xHUPSV8.App\Controller\PerformanceController::show()</argument>
+        <argument>.service_locator.3BoFVFw.App\Controller\PerformanceController::newParticipation()</argument>
+        <argument>.service_locator.INhQMpu</argument>
+        <argument>.service_locator.INhQMpu.App\Controller\PerformanceController::editParticipation()</argument>
         <argument>.service_locator.0MQaTBY</argument>
         <argument>.service_locator.0MQaTBY.App\Controller\SecurityController::login()</argument>
-        <argument>.service_locator.ibfZZhe</argument>
+        <argument>.service_locator.hEKaufi</argument>
         <argument>.service_locator.DA6YX9k</argument>
         <argument>.service_locator.nqEKT7G</argument>
         <argument>.debug.serializer.normalizer.serializer.denormalizer.unwrapping</argument>
@@ -8963,7 +9013,7 @@
         <argument>.debug.value_resolver.argument_resolver.not_tagged_controller</argument>
         <argument>.debug.value_resolver.argument_resolver.request_payload</argument>
         <argument>.debug.value_resolver.argument_resolver.query_parameter_value_resolver</argument>
-        <argument>.service_locator.8YjSSoD</argument>
+        <argument>.service_locator.yyYoFu0</argument>
         <argument>messenger.bus.default.middleware.traceable</argument>
         <argument>messenger.bus.default.middleware.add_bus_name_stamp_middleware</argument>
         <argument>messenger.bus.default.middleware.send_message</argument>
@@ -8984,7 +9034,7 @@
         <argument>messenger.bus.default.messenger.handlers_locator</argument>
         <argument>.debug.http_client</argument>
         <argument>.service_locator.fipAWQf</argument>
-        <argument>.service_locator.kxZ91SO</argument>
+        <argument>.service_locator.BHPr36e</argument>
         <argument>.service_locator.W55Po6X</argument>
         <argument>.doctrine.orm.default_metadata_driver</argument>
         <argument>doctrine.dbal.default_schema_asset_filter_manager</argument>
@@ -10079,6 +10129,9 @@
         <argument key="ObjectifController" type="collection">
           <argument>App\Controller\ObjectifController</argument>
         </argument>
+        <argument key="PerformanceController" type="collection">
+          <argument>App\Controller\PerformanceController</argument>
+        </argument>
         <argument key="SecurityController" type="collection">
           <argument>App\Controller\SecurityController</argument>
         </argument>
@@ -10088,11 +10141,17 @@
         <argument key="Competition" type="collection">
           <argument>App\Entity\Competition</argument>
         </argument>
+        <argument key="CompetitionParticipation" type="collection">
+          <argument>App\Entity\CompetitionParticipation</argument>
+        </argument>
         <argument key="Objectif" type="collection">
           <argument>App\Entity\Objectif</argument>
         </argument>
         <argument key="User" type="collection">
           <argument>App\Entity\User</argument>
+        </argument>
+        <argument key="CompetitionParticipationType" type="collection">
+          <argument>App\Form\CompetitionParticipationType</argument>
         </argument>
         <argument key="CompetitionType" type="collection">
           <argument>App\Form\CompetitionType</argument>
@@ -10102,6 +10161,9 @@
         </argument>
         <argument key="UserType" type="collection">
           <argument>App\Form\UserType</argument>
+        </argument>
+        <argument key="CompetitionParticipationRepository" type="collection">
+          <argument>App\Repository\CompetitionParticipationRepository</argument>
         </argument>
         <argument key="CompetitionRepository" type="collection">
           <argument>App\Repository\CompetitionRepository</argument>
@@ -10115,6 +10177,9 @@
         <argument key="AppCustomAuthenticator" type="collection">
           <argument>App\Security\AppCustomAuthenticator</argument>
           <argument>debug.App\Security\AppCustomAuthenticator</argument>
+        </argument>
+        <argument key="PerformanceService" type="collection">
+          <argument>App\Service\PerformanceService</argument>
         </argument>
         <argument key="ControllerResolver" type="collection">
           <argument>controller_resolver</argument>
@@ -13224,6 +13289,10 @@
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ObjectifController" class="App\Controller\ObjectifController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\ObjectifController.0.App\Controller\ObjectifController" class="App\Controller\ObjectifController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ObjectifController" class="App\Controller\ObjectifController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PerformanceController" class="App\Controller\PerformanceController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PerformanceController" class="App\Controller\PerformanceController" autowire="true" abstract="true"/>
+    <service id=".instanceof.App\Controller\PerformanceController.0.App\Controller\PerformanceController" class="App\Controller\PerformanceController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\PerformanceController" class="App\Controller\PerformanceController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
     <service id=".instanceof.App\Controller\SecurityController.0.App\Controller\SecurityController" class="App\Controller\SecurityController" autowire="true" abstract="true"/>
@@ -13232,16 +13301,22 @@
     <service id=".abstract.instanceof.App\DataFixtures\AppFixtures" class="App\DataFixtures\AppFixtures" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Competition.0.App\Entity\Competition" class="App\Entity\Competition" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\Competition" class="App\Entity\Competition" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.App\Entity\CompetitionParticipation.0.App\Entity\CompetitionParticipation" class="App\Entity\CompetitionParticipation" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Entity\CompetitionParticipation" class="App\Entity\CompetitionParticipation" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\Objectif.0.App\Entity\Objectif" class="App\Entity\Objectif" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\Objectif" class="App\Entity\Objectif" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.App\Entity\User.0.App\Entity\User" class="App\Entity\User" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Entity\User" class="App\Entity\User" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\CompetitionParticipationType" class="App\Form\CompetitionParticipationType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\CompetitionParticipationType" class="App\Form\CompetitionParticipationType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\CompetitionType" class="App\Form\CompetitionType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\CompetitionType" class="App\Form\CompetitionType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ObjectifType" class="App\Form\ObjectifType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\ObjectifType" class="App\Form\ObjectifType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\UserType" class="App\Form\UserType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\UserType" class="App\Form\UserType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompetitionParticipationRepository" class="App\Repository\CompetitionParticipationRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\CompetitionParticipationRepository" class="App\Repository\CompetitionParticipationRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\CompetitionRepository" class="App\Repository\CompetitionRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\CompetitionRepository" class="App\Repository\CompetitionRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ObjectifRepository" class="App\Repository\ObjectifRepository" autowire="true" abstract="true"/>
@@ -13961,6 +14036,53 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.ZRE8j43" method="withContext"/>
     </service>
+    <service id=".service_locator.X2xQmC2" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="performanceService" type="service_closure" id="App\Service\PerformanceService"/>
+        <argument key="participationRepository" type="service_closure" id="App\Repository\CompetitionParticipationRepository"/>
+        <argument key="userRepository" type="service_closure" id="App\Repository\UserRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.X2xQmC2.App\Controller\PerformanceController::index()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\PerformanceController::index()"/>
+      <argument>App\Controller\PerformanceController::index()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.X2xQmC2" method="withContext"/>
+    </service>
+    <service id=".service_locator.xHUPSV8" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="sportif" type="service_closure" id=".errored..service_locator.xHUPSV8.App\Entity\User"/>
+        <argument key="performanceService" type="service_closure" id="App\Service\PerformanceService"/>
+        <argument key="participationRepository" type="service_closure" id="App\Repository\CompetitionParticipationRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.xHUPSV8.App\Controller\PerformanceController::show()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\PerformanceController::show()"/>
+      <argument>App\Controller\PerformanceController::show()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.xHUPSV8" method="withContext"/>
+    </service>
+    <service id=".service_locator.3BoFVFw.App\Controller\PerformanceController::newParticipation()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\PerformanceController::newParticipation()"/>
+      <argument>App\Controller\PerformanceController::newParticipation()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.3BoFVFw" method="withContext"/>
+    </service>
+    <service id=".service_locator.INhQMpu" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="participation" type="service_closure" id=".errored..service_locator.INhQMpu.App\Entity\CompetitionParticipation"/>
+        <argument key="entityManager" type="service_closure" id="doctrine.orm.default_entity_manager"/>
+      </argument>
+    </service>
+    <service id=".service_locator.INhQMpu.App\Controller\PerformanceController::editParticipation()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\PerformanceController::editParticipation()"/>
+      <argument>App\Controller\PerformanceController::editParticipation()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.INhQMpu" method="withContext"/>
+    </service>
     <service id=".service_locator.0MQaTBY" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -13973,7 +14095,7 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.0MQaTBY" method="withContext"/>
     </service>
-    <service id=".service_locator.ibfZZhe" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.hEKaufi" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
@@ -13995,6 +14117,10 @@
         <argument key="App\Controller\ObjectifController::show" type="service_closure" id=".service_locator.hN49sHz.App\Controller\ObjectifController::show()"/>
         <argument key="App\Controller\ObjectifController::edit" type="service_closure" id=".service_locator.ZRE8j43.App\Controller\ObjectifController::edit()"/>
         <argument key="App\Controller\ObjectifController::delete" type="service_closure" id=".service_locator.ZRE8j43.App\Controller\ObjectifController::delete()"/>
+        <argument key="App\Controller\PerformanceController::index" type="service_closure" id=".service_locator.X2xQmC2.App\Controller\PerformanceController::index()"/>
+        <argument key="App\Controller\PerformanceController::show" type="service_closure" id=".service_locator.xHUPSV8.App\Controller\PerformanceController::show()"/>
+        <argument key="App\Controller\PerformanceController::newParticipation" type="service_closure" id=".service_locator.3BoFVFw.App\Controller\PerformanceController::newParticipation()"/>
+        <argument key="App\Controller\PerformanceController::editParticipation" type="service_closure" id=".service_locator.INhQMpu.App\Controller\PerformanceController::editParticipation()"/>
         <argument key="App\Controller\SecurityController::login" type="service_closure" id=".service_locator.0MQaTBY.App\Controller\SecurityController::login()"/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.1vYpZ1B.kernel::loadRoutes()"/>
@@ -14013,6 +14139,10 @@
         <argument key="App\Controller\ObjectifController:show" type="service_closure" id=".service_locator.hN49sHz.App\Controller\ObjectifController::show()"/>
         <argument key="App\Controller\ObjectifController:edit" type="service_closure" id=".service_locator.ZRE8j43.App\Controller\ObjectifController::edit()"/>
         <argument key="App\Controller\ObjectifController:delete" type="service_closure" id=".service_locator.ZRE8j43.App\Controller\ObjectifController::delete()"/>
+        <argument key="App\Controller\PerformanceController:index" type="service_closure" id=".service_locator.X2xQmC2.App\Controller\PerformanceController::index()"/>
+        <argument key="App\Controller\PerformanceController:show" type="service_closure" id=".service_locator.xHUPSV8.App\Controller\PerformanceController::show()"/>
+        <argument key="App\Controller\PerformanceController:newParticipation" type="service_closure" id=".service_locator.3BoFVFw.App\Controller\PerformanceController::newParticipation()"/>
+        <argument key="App\Controller\PerformanceController:editParticipation" type="service_closure" id=".service_locator.INhQMpu.App\Controller\PerformanceController::editParticipation()"/>
         <argument key="App\Controller\SecurityController:login" type="service_closure" id=".service_locator.0MQaTBY.App\Controller\SecurityController::login()"/>
       </argument>
     </service>
@@ -14199,9 +14329,10 @@
       <argument type="service" id="argument_resolver.query_parameter_value_resolver"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.8YjSSoD" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.yyYoFu0" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Form\CompetitionParticipationType" type="service_closure" id="App\Form\CompetitionParticipationType"/>
         <argument key="App\Form\CompetitionType" type="service_closure" id="App\Form\CompetitionType"/>
         <argument key="App\Form\ObjectifType" type="service_closure" id="App\Form\ObjectifType"/>
         <argument key="App\Form\UserType" type="service_closure" id="App\Form\UserType"/>
@@ -14353,9 +14484,10 @@
         <argument key="turbo.doctrine.event_listener" type="service_closure" id="turbo.doctrine.event_listener"/>
       </argument>
     </service>
-    <service id=".service_locator.kxZ91SO" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.BHPr36e" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
+        <argument key="App\Repository\CompetitionParticipationRepository" type="service_closure" id="App\Repository\CompetitionParticipationRepository"/>
         <argument key="App\Repository\CompetitionRepository" type="service_closure" id="App\Repository\CompetitionRepository"/>
         <argument key="App\Repository\ObjectifRepository" type="service_closure" id="App\Repository\ObjectifRepository"/>
         <argument key="App\Repository\UserRepository" type="service_closure" id="App\Repository\UserRepository"/>
@@ -14651,6 +14783,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.TJNRSaV" method="withContext"/>
     </service>
+    <service id=".service_locator.TJNRSaV.App\Controller\PerformanceController" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\PerformanceController"/>
+      <argument>App\Controller\PerformanceController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.TJNRSaV" method="withContext"/>
+    </service>
     <service id=".service_locator.TJNRSaV.App\Controller\SecurityController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\SecurityController"/>
       <argument>App\Controller\SecurityController</argument>
@@ -14867,6 +15005,7 @@
           <argument>App\Controller\M2LController</argument>
           <argument>App\Controller\MainController</argument>
           <argument>App\Controller\ObjectifController</argument>
+          <argument>App\Controller\PerformanceController</argument>
           <argument>App\Controller\SecurityController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
@@ -15117,6 +15256,12 @@
     </service>
     <service id=".errored..service_locator.ZRE8j43.App\Entity\Objectif" class="App\Entity\Objectif">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.ZRE8j43&quot;: it needs an instance of &quot;App\Entity\Objectif&quot; but this type has been excluded because it's a Doctrine entity."/>
+    </service>
+    <service id=".errored..service_locator.xHUPSV8.App\Entity\User" class="App\Entity\User">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.xHUPSV8&quot;: it needs an instance of &quot;App\Entity\User&quot; but this type has been excluded because it's a Doctrine entity."/>
+    </service>
+    <service id=".errored..service_locator.INhQMpu.App\Entity\CompetitionParticipation" class="App\Entity\CompetitionParticipation">
+      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.INhQMpu&quot;: it needs an instance of &quot;App\Entity\CompetitionParticipation&quot; but this type has been excluded because it's a Doctrine entity."/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -16364,7 +16509,7 @@
     <service id="doctrine.fixtures.provider" alias="doctrine.fixtures.loader"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.ibfZZhe"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.hEKaufi"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id=".Psr\Log\LoggerInterface $request" alias="monolog.logger.request"/>
@@ -16433,6 +16578,9 @@
     <service id=".service_locator.bwf.JB2" alias=".service_locator.iGeMgsq"/>
     <service id=".service_locator.zqanKlz" alias=".service_locator.hN49sHz"/>
     <service id=".service_locator._fNSrrk" alias=".service_locator.ZRE8j43"/>
+    <service id=".service_locator.qy3LNUq" alias=".service_locator.X2xQmC2"/>
+    <service id=".service_locator.qeWl8Im" alias=".service_locator.xHUPSV8"/>
+    <service id=".service_locator.4rYuXoF" alias=".service_locator.INhQMpu"/>
     <service id=".service_locator.uBwBrvQ" alias=".service_locator.0MQaTBY"/>
     <service id=".service_locator.D6tJ4Px" alias=".service_locator.TJNRSaV"/>
   </services>

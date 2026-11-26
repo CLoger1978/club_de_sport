@@ -48,9 +48,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'sportif', orphanRemoval: true)]
     private Collection $objectifs;
 
+    /**
+     * @var Collection<int, CompetitionParticipation>
+     */
+    #[ORM\OneToMany(targetEntity: CompetitionParticipation::class, mappedBy: 'sportif', orphanRemoval: true)]
+    private Collection $competitionsParticipations;
+
     public function __construct()
     {
         $this->objectifs = new ArrayCollection();
+        $this->competitionsParticipations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +201,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($objectif->getSportif() === $this) {
                 $objectif->setSportif(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CompetitionParticipation>
+     */
+    public function getCompetitionsParticipations(): Collection
+    {
+        return $this->competitionsParticipations;
+    }
+
+    public function addCompetitionParticipation(CompetitionParticipation $participation): static
+    {
+        if (!$this->competitionsParticipations->contains($participation)) {
+            $this->competitionsParticipations->add($participation);
+            $participation->setSportif($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompetitionParticipation(CompetitionParticipation $participation): static
+    {
+        if ($this->competitionsParticipations->removeElement($participation)) {
+            if ($participation->getSportif() === $this) {
+                $participation->setSportif(null);
             }
         }
 

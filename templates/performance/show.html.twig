@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Performance de {{ sportif.prenom }} {{ sportif.nom }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>{{ sportif.prenom }} {{ sportif.nom }}</h1>
+            <p class="text-muted mb-0">Indice de performance</p>
+        </div>
+        {% if is_granted('ROLE_ANIMATEUR') %}
+            <a class="btn btn-primary" href="{{ path('app_performance_participation_new') }}">Ajouter une competition</a>
+        {% endif %}
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="display-5">{{ performance.indice }}/100</h2>
+            <div class="progress" role="progressbar" aria-label="Indice de performance" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ performance.indice }}">
+                <div class="progress-bar" style="width: {{ performance.indice }}%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card h-100"><div class="card-body">
+                <h5>Competences acquises</h5>
+                <p class="fs-3">{{ performance.competences }}%</p>
+                <small>{{ performance.objectifsAcquis }} / {{ performance.objectifsTotaux }} objectifs</small>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100"><div class="card-body">
+                <h5>Progression en competition</h5>
+                <p class="fs-3">{{ performance.progressionCompetitions }}%</p>
+                <small>Moyenne des participations</small>
+            </div></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100"><div class="card-body">
+                <h5>Competitions</h5>
+                <p class="fs-3">{{ performance.nombreCompetitions }}</p>
+                <small>{{ performance.participationScore }}/100 de participation</small>
+            </div></div>
+        </div>
+    </div>
+
+    <h2 class="h4">Objectifs</h2>
+    <div class="table-responsive mb-4">
+        <table class="table table-striped">
+            <thead><tr><th>Objectif</th><th>Statut</th><th>Commentaire animateur</th></tr></thead>
+            <tbody>
+            {% for objectif in sportif.objectifs %}
+                <tr>
+                    <td>{{ objectif.titre }}</td>
+                    <td>{{ objectif.statut }}</td>
+                    <td>{{ objectif.commentaireAnimateur|default('Aucun commentaire') }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="3">Aucun objectif fixe.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="h4">Competitions</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead><tr><th>Competition</th><th>Progression</th>{% if is_granted('ROLE_ANIMATEUR') %}<th>Action</th>{% endif %}</tr></thead>
+            <tbody>
+            {% for participation in participations %}
+                <tr>
+                    <td>{{ participation.competition.nom }}</td>
+                    <td>{{ participation.progression }}%</td>
+                    {% if is_granted('ROLE_ANIMATEUR') %}
+                        <td><a href="{{ path('app_performance_participation_edit', {'id': participation.id}) }}">Modifier</a></td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr><td colspan="{{ is_granted('ROLE_ANIMATEUR') ? 3 : 2 }}">Aucune competition enregistrée.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

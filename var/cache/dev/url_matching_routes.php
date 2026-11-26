@@ -22,6 +22,8 @@ return [
         '/' => [[['_route' => 'app_main', '_controller' => 'App\\Controller\\MainController::index'], null, null, null, false, false, null]],
         '/objectif' => [[['_route' => 'app_objectif_index', '_controller' => 'App\\Controller\\ObjectifController::index'], null, ['GET' => 0], null, false, false, null]],
         '/objectif/new' => [[['_route' => 'app_objectif_new', '_controller' => 'App\\Controller\\ObjectifController::new'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
+        '/performance' => [[['_route' => 'app_performance', '_controller' => 'App\\Controller\\PerformanceController::index'], null, ['GET' => 0], null, false, false, null]],
+        '/performance/participation/new' => [[['_route' => 'app_performance_participation_new', '_controller' => 'App\\Controller\\PerformanceController::newParticipation'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
     ],
@@ -60,6 +62,10 @@ return [
                     .'|/edit(*:337)'
                     .'|(*:345)'
                 .')'
+                .'|/performance/(?'
+                    .'|(\\d+)(*:375)'
+                    .'|participation/([^/]++)/edit(*:410)'
+                .')'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -79,8 +85,10 @@ return [
         294 => [[['_route' => 'app_m2_l_delete', '_controller' => 'App\\Controller\\M2LController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
         324 => [[['_route' => 'app_objectif_show', '_controller' => 'App\\Controller\\ObjectifController::show'], ['id'], ['GET' => 0], null, false, true, null]],
         337 => [[['_route' => 'app_objectif_edit', '_controller' => 'App\\Controller\\ObjectifController::edit'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        345 => [
-            [['_route' => 'app_objectif_delete', '_controller' => 'App\\Controller\\ObjectifController::delete'], ['id'], ['POST' => 0], null, false, true, null],
+        345 => [[['_route' => 'app_objectif_delete', '_controller' => 'App\\Controller\\ObjectifController::delete'], ['id'], ['POST' => 0], null, false, true, null]],
+        375 => [[['_route' => 'app_performance_show', '_controller' => 'App\\Controller\\PerformanceController::show'], ['id'], ['GET' => 0], null, false, true, null]],
+        410 => [
+            [['_route' => 'app_performance_participation_edit', '_controller' => 'App\\Controller\\PerformanceController::editParticipation'], ['id'], ['GET' => 0, 'POST' => 1], null, false, false, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

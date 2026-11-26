@@ -110,36 +110,42 @@ class __TwigTemplate_84dc35e3a0fbdd83aedc7a5be10223c8 extends Template
         yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_objectif_index");
         yield "\">Objectifs</a>
                         </li>
+                        <li class=\"nav-item\">
+                            <a class=\"nav-link\" href=\"";
+        // line 40
+        yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_performance");
+        yield "\">Performance</a>
+                        </li>
                     </ul>
                     <ul class=\"navbar-nav\">
                         ";
-        // line 41
-        if ((($tmp = CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 41, $this->source); })()), "user", [], "any", false, false, false, 41)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 42
+        // line 44
+        if ((($tmp = CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 44, $this->source); })()), "user", [], "any", false, false, false, 44)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 45
             yield "                            <li class=\"nav-item\">
                                 <span class=\"nav-link disabled text-white-50\">";
-            // line 43
-            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 43, $this->source); })()), "user", [], "any", false, false, false, 43), "email", [], "any", false, false, false, 43), "html", null, true);
+            // line 46
+            yield (string) $this->escaper->escape(CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 46, $this->source); })()), "user", [], "any", false, false, false, 46), "email", [], "any", false, false, false, 46), "html", null, true);
             yield "</span>
                             </li>
                             <li class=\"nav-item\">
                                 <a class=\"btn btn-outline-light btn-sm ms-2 mt-1\" href=\"";
-            // line 46
+            // line 49
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
             yield "\">Déconnexion</a>
                             </li>
                         ";
         } else {
-            // line 49
+            // line 52
             yield "                            <li class=\"nav-item\">
                                 <a class=\"btn btn-light btn-sm\" href=\"";
-            // line 50
+            // line 53
             yield (string) $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
             yield "\">Connexion</a>
                             </li>
                         ";
         }
-        // line 53
+        // line 56
         yield "                    </ul>
                 </div>
             </div>
@@ -147,9 +153,9 @@ class __TwigTemplate_84dc35e3a0fbdd83aedc7a5be10223c8 extends Template
 
         <main class=\"container\">
             ";
-        // line 59
+        // line 62
         yield from $this->unwrap()->yieldBlock('body', $context, $blocks);
-        // line 60
+        // line 63
         yield "        </main>
     </body>
 </html>";
@@ -264,7 +270,7 @@ class __TwigTemplate_84dc35e3a0fbdd83aedc7a5be10223c8 extends Template
         return; yield;
     }
 
-    // line 59
+    // line 62
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -315,7 +321,7 @@ class __TwigTemplate_84dc35e3a0fbdd83aedc7a5be10223c8 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  268 => 59,  245 => 17,  234 => 18,  232 => 17,  228 => 15,  215 => 14,  202 => 10,  189 => 9,  166 => 5,  153 => 60,  151 => 59,  143 => 53,  137 => 50,  134 => 49,  128 => 46,  122 => 43,  119 => 42,  117 => 41,  110 => 37,  100 => 30,  94 => 26,  86 => 22,  83 => 21,  81 => 20,  78 => 19,  76 => 14,  73 => 13,  71 => 9,  64 => 5,  58 => 1,);
+        return array (  274 => 62,  251 => 17,  240 => 18,  238 => 17,  234 => 15,  221 => 14,  208 => 10,  195 => 9,  172 => 5,  159 => 63,  157 => 62,  149 => 56,  143 => 53,  140 => 52,  134 => 49,  128 => 46,  125 => 45,  123 => 44,  116 => 40,  110 => 37,  100 => 30,  94 => 26,  86 => 22,  83 => 21,  81 => 20,  78 => 19,  76 => 14,  73 => 13,  71 => 9,  64 => 5,  58 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -357,6 +363,9 @@ class __TwigTemplate_84dc35e3a0fbdd83aedc7a5be10223c8 extends Template
                     <ul class=\"navbar-nav me-auto\">
                         <li class=\"nav-item\">
                             <a class=\"nav-link\" href=\"{{ path(\x27app_objectif_index\x27) }}\">Objectifs</a>
+                        </li>
+                        <li class=\"nav-item\">
+                            <a class=\"nav-link\" href=\"{{ path(\x27app_performance\x27) }}\">Performance</a>
                         </li>
                     </ul>
                     <ul class=\"navbar-nav\">

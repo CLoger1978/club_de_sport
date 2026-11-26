@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Performances des sportifs{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Performances des sportifs</h1>
+        <a class="btn btn-primary" href="{{ path('app_performance_participation_new') }}">Ajouter une competition</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Sportif</th>
+                    <th>Indice</th>
+                    <th>Competences</th>
+                    <th>Progression</th>
+                    <th>Competitions</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in performances %}
+                <tr>
+                    <td>{{ row.sportif.prenom }} {{ row.sportif.nom }}</td>
+                    <td><strong>{{ row.details.indice }}/100</strong></td>
+                    <td>{{ row.details.competences }}%</td>
+                    <td>{{ row.details.progressionCompetitions }}%</td>
+                    <td>{{ row.details.nombreCompetitions }}</td>
+                    <td><a class="btn btn-sm btn-outline-primary" href="{{ path('app_performance_show', {'id': row.sportif.id}) }}">Voir</a></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="6">Aucun sportif trouve.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
