@@ -1,20 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MainController!{% endblock %}
+{% block title %}Accueil - M2L Sport{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <section class="hero-panel p-4 p-md-5 mb-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                {% if app.user %}
+                    <p class="text-uppercase small opacity-75 mb-2">Tableau de bord</p>
+                    <h1 class="fw-bold mb-3">Bienvenue, {{ app.user.prenom }} !</h1>
+                    <p class="lead mb-4 opacity-75">Suivez vos objectifs, vos compétences et votre progression en compétition.</p>
+                {% else %}
+                    <p class="text-uppercase small opacity-75 mb-2">Maison des Ligues</p>
+                    <h1 class="fw-bold mb-3">Gestion du suivi sportif</h1>
+                    <p class="lead mb-4 opacity-75">Un espace unique pour les sportifs, animateurs et administrateurs.</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                {% if app.user %}
+                    <a class="btn btn-light me-2" href="{{ path('app_performance') }}">Voir ma performance</a>
+                    <a class="btn btn-outline-light" href="{{ path('app_profil') }}">Mon profil</a>
+                {% else %}
+                    <a class="btn btn-light btn-lg" href="{{ path('app_login') }}">Se connecter</a>
+                {% endif %}
+            </div>
+        </div>
+    </section>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/BLEURVACQ/M2L/src/Controller/MainController.php</code></li>
-        <li>Your template at <code>C:/Users/BLEURVACQ/M2L/templates/main/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a class="card m2l-card h-100 text-decoration-none text-dark" href="{{ path('app_objectif_index') }}">
+                <div class="card-body p-4">
+                    <h2 class="h5">Objectifs</h2>
+                    <p class="text-muted mb-0">Consulter et gérer les objectifs sportifs.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card m2l-card h-100 text-decoration-none text-dark" href="{{ path('app_performance') }}">
+                <div class="card-body p-4">
+                    <h2 class="h5">Performances</h2>
+                    <p class="text-muted mb-0">Suivre les progrès et les participations.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="card m2l-card h-100 text-decoration-none text-dark" href="{{ app.user ? path('app_profil') : path('app_login') }}">
+                <div class="card-body p-4">
+                    <h2 class="h5">Profil utilisateur</h2>
+                    <p class="text-muted mb-0">Accéder aux informations personnelles.</p>
+                </div>
+            </a>
+        </div>
+    </div>
 {% endblock %}

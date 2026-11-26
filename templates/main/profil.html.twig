@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ sportif.prenom }} {{ sportif.nom }}{% endblock %}
+
+{% block body %}
+    <div class="card m2l-card mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3">
+                <span class="m2l-avatar">{{ sportif.prenom|first|upper }}{{ sportif.nom|first|upper }}</span>
+                <div>
+                    <h1 class="h3 mb-1">{{ sportif.prenom }} {{ sportif.nom }}</h1>
+                    <p class="text-muted mb-0">{{ sportif.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card m2l-card h-100">
+                <div class="card-body p-4">
+                    <p class="text-muted mb-2">Indice de performance</p>
+                    <div class="metric-value text-primary">{{ performance.indice }}/100</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card m2l-card h-100">
+                <div class="card-body p-4">
+                    <p class="text-muted mb-2">Objectifs acquis</p>
+                    <div class="metric-value">{{ performance.objectifsAcquis }}/{{ performance.objectifsTotaux }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card m2l-card h-100">
+                <div class="card-body p-4">
+                    <p class="text-muted mb-2">Compétitions</p>
+                    <div class="metric-value">{{ performance.nombreCompetitions }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card m2l-card h-100">
+                <div class="card-header bg-white border-0 px-4 pt-4"><h2 class="h5 mb-0">Mes objectifs</h2></div>
+                <div class="table-responsive px-2 pb-2">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>Objectif</th><th>Statut</th></tr></thead>
+                        <tbody>
+                        {% for objectif in sportif.objectifs %}
+                            <tr><td>{{ objectif.titre }}</td><td><span class="badge text-bg-secondary">{{ objectif.statut }}</span></td></tr>
+                        {% else %}
+                            <tr><td colspan="2" class="text-muted">Aucun objectif enregistré.</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card m2l-card h-100">
+                <div class="card-header bg-white border-0 px-4 pt-4"><h2 class="h5 mb-0">Mes compétitions</h2></div>
+                <div class="table-responsive px-2 pb-2">
+                    <table class="table align-middle mb-0">
+                        <thead><tr><th>Compétition</th><th>Progression</th></tr></thead>
+                        <tbody>
+                        {% for participation in participations %}
+                            <tr><td>{{ participation.competition.nom }}</td><td>{{ participation.progression }}%</td></tr>
+                        {% else %}
+                            <tr><td colspan="2" class="text-muted">Aucune participation enregistrée.</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

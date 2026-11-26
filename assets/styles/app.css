@@ -1,3 +1,62 @@
+:root {
+    --m2l-navy: #13233f;
+    --m2l-blue: #2f66b5;
+    --m2l-green: #58a786;
+    --m2l-surface: #f4f7fb;
+}
+
 body {
-    background-color: skyblue;
+    min-height: 100vh;
+    background: var(--m2l-surface);
+    color: #263248;
+}
+
+.m2l-navbar {
+    background: var(--m2l-navy);
+}
+
+.m2l-navbar .nav-link {
+    color: rgba(255, 255, 255, .78);
+}
+
+.m2l-navbar .nav-link:hover,
+.m2l-navbar .nav-link.active {
+    color: #fff;
+}
+
+.m2l-card {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 12px 32px rgba(19, 35, 63, .08);
+}
+
+.m2l-avatar {
+    width: 72px;
+    height: 72px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--m2l-blue);
+    color: #fff;
+    font-size: 1.65rem;
+    font-weight: 700;
+}
+
+.hero-panel {
+    border-radius: 1.25rem;
+    background: linear-gradient(135deg, var(--m2l-navy), var(--m2l-blue));
+    color: #fff;
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.login-page {
+    min-height: calc(100vh - 110px);
+    display: flex;
+    align-items: center;
 }

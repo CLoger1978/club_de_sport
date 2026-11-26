@@ -553,7 +553,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" priority="-50">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.hEKaufi"/>
+      <argument type="service" id=".service_locator.JKAS9WI"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" priority="-100">controller.argument_value_resolver</tag>
@@ -3724,7 +3724,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.hEKaufi"/>
+      <argument type="service" id=".service_locator.JKAS9WI"/>
     </service>
     <service id="debug.log_processor" class="Symfony\Bridge\Monolog\Processor\DebugProcessor">
       <tag name="kernel.reset" method="reset"/>
@@ -8958,6 +8958,8 @@
         <argument>.service_locator.8m8R3s_</argument>
         <argument>.service_locator.8m8R3s_.App\Controller\M2LController::edit()</argument>
         <argument>.service_locator.8m8R3s_.App\Controller\M2LController::delete()</argument>
+        <argument>.service_locator.sdjGs59</argument>
+        <argument>.service_locator.sdjGs59.App\Controller\MainController::profil()</argument>
         <argument>.service_locator.iGeMgsq</argument>
         <argument>.service_locator.iGeMgsq.App\Controller\ObjectifController::index()</argument>
         <argument>.service_locator.3BoFVFw.App\Controller\ObjectifController::new()</argument>
@@ -8975,7 +8977,7 @@
         <argument>.service_locator.INhQMpu.App\Controller\PerformanceController::editParticipation()</argument>
         <argument>.service_locator.0MQaTBY</argument>
         <argument>.service_locator.0MQaTBY.App\Controller\SecurityController::login()</argument>
-        <argument>.service_locator.hEKaufi</argument>
+        <argument>.service_locator.JKAS9WI</argument>
         <argument>.service_locator.DA6YX9k</argument>
         <argument>.service_locator.nqEKT7G</argument>
         <argument>.debug.serializer.normalizer.serializer.denormalizer.unwrapping</argument>
@@ -13987,6 +13989,19 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.8m8R3s_" method="withContext"/>
     </service>
+    <service id=".service_locator.sdjGs59" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="performanceService" type="service_closure" id="App\Service\PerformanceService"/>
+        <argument key="participationRepository" type="service_closure" id="App\Repository\CompetitionParticipationRepository"/>
+      </argument>
+    </service>
+    <service id=".service_locator.sdjGs59.App\Controller\MainController::profil()" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\MainController::profil()"/>
+      <argument>App\Controller\MainController::profil()</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.sdjGs59" method="withContext"/>
+    </service>
     <service id=".service_locator.iGeMgsq" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -14095,7 +14110,7 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.0MQaTBY" method="withContext"/>
     </service>
-    <service id=".service_locator.hEKaufi" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.JKAS9WI" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.1vYpZ1B.kernel::registerContainerConfiguration()"/>
@@ -14112,6 +14127,7 @@
         <argument key="App\Controller\M2LController::show" type="service_closure" id=".service_locator.kYAceIU.App\Controller\M2LController::show()"/>
         <argument key="App\Controller\M2LController::edit" type="service_closure" id=".service_locator.8m8R3s_.App\Controller\M2LController::edit()"/>
         <argument key="App\Controller\M2LController::delete" type="service_closure" id=".service_locator.8m8R3s_.App\Controller\M2LController::delete()"/>
+        <argument key="App\Controller\MainController::profil" type="service_closure" id=".service_locator.sdjGs59.App\Controller\MainController::profil()"/>
         <argument key="App\Controller\ObjectifController::index" type="service_closure" id=".service_locator.iGeMgsq.App\Controller\ObjectifController::index()"/>
         <argument key="App\Controller\ObjectifController::new" type="service_closure" id=".service_locator.3BoFVFw.App\Controller\ObjectifController::new()"/>
         <argument key="App\Controller\ObjectifController::show" type="service_closure" id=".service_locator.hN49sHz.App\Controller\ObjectifController::show()"/>
@@ -14134,6 +14150,7 @@
         <argument key="App\Controller\M2LController:show" type="service_closure" id=".service_locator.kYAceIU.App\Controller\M2LController::show()"/>
         <argument key="App\Controller\M2LController:edit" type="service_closure" id=".service_locator.8m8R3s_.App\Controller\M2LController::edit()"/>
         <argument key="App\Controller\M2LController:delete" type="service_closure" id=".service_locator.8m8R3s_.App\Controller\M2LController::delete()"/>
+        <argument key="App\Controller\MainController:profil" type="service_closure" id=".service_locator.sdjGs59.App\Controller\MainController::profil()"/>
         <argument key="App\Controller\ObjectifController:index" type="service_closure" id=".service_locator.iGeMgsq.App\Controller\ObjectifController::index()"/>
         <argument key="App\Controller\ObjectifController:new" type="service_closure" id=".service_locator.3BoFVFw.App\Controller\ObjectifController::new()"/>
         <argument key="App\Controller\ObjectifController:show" type="service_closure" id=".service_locator.hN49sHz.App\Controller\ObjectifController::show()"/>
@@ -16509,7 +16526,7 @@
     <service id="doctrine.fixtures.provider" alias="doctrine.fixtures.loader"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.ryAvHi4" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.hEKaufi"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.JKAS9WI"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.W55Po6X"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id=".Psr\Log\LoggerInterface $request" alias="monolog.logger.request"/>
@@ -16575,6 +16592,7 @@
     <service id=".service_locator.yZty4YD" alias=".service_locator.PtMLGj3"/>
     <service id=".service_locator.yFRapHK" alias=".service_locator.kYAceIU"/>
     <service id=".service_locator.crIAbn5" alias=".service_locator.8m8R3s_"/>
+    <service id=".service_locator.UjeVnK." alias=".service_locator.sdjGs59"/>
     <service id=".service_locator.bwf.JB2" alias=".service_locator.iGeMgsq"/>
     <service id=".service_locator.zqanKlz" alias=".service_locator.hN49sHz"/>
     <service id=".service_locator._fNSrrk" alias=".service_locator.ZRE8j43"/>
